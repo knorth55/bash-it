@@ -85,17 +85,22 @@ prompt() {
     fi
 
     # nice prompt
+    local master_host=$(echo $ROS_MASTER_URI | cut -d\/ -f3 | cut -d\: -f1)
+    local ros_prompt=""
+    if [[ "$master_host" != "" && $master_host != "localhost" ]]; then
+        ros_prompt="[${bold_red}$ROS_MASTER_URI${normal}][${bold_red}$ROS_IP${normal}]"
+    fi
     case "`id -u`" in
-        0) PS1="${TITLEBAR}┌─$(my_ve)$(chroot)[$my_ps_root][$my_ps_host_root]$(modern_scm_prompt)$(__my_rvm_ruby_version)[${cyan}\w${normal}]$(is_vim_shell)
-└─▪ "
+        0) PS1="${TITLEBAR}$(my_ve)$(chroot)$ros_prompt[$my_ps_root][$my_ps_host_root]$(modern_scm_prompt)$(__my_rvm_ruby_version)[${cyan}\w${normal}]$(is_vim_shell)
+$ "
         ;;
-        *) PS1="${TITLEBAR}┌─$(my_ve)$(chroot)[$my_ps_user][$my_ps_host]$(modern_scm_prompt)$(__my_rvm_ruby_version)[${cyan}\w${normal}]$(is_vim_shell)
-└─▪ "
+        *) PS1="${TITLEBAR}$(my_ve)$(chroot)$ros_prompt[$my_ps_user][$my_ps_host]$(modern_scm_prompt)$(__my_rvm_ruby_version)[${cyan}\w${normal}]$(is_vim_shell)
+$ "
         ;;
     esac
 }
 
-PS2="└─▪ "
+PS2="$ "
 
 
 
