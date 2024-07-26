@@ -16,7 +16,6 @@ alias gpristine='git reset --hard && git clean -dfx'
 alias gclean='git clean -fd'
 alias gm="git merge"
 alias gmv='git mv'
-alias g='git'
 alias get='git'
 alias gs='git status'
 alias gss='git status -s'
