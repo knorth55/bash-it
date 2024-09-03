@@ -86,8 +86,14 @@ prompt() {
 
     # nice prompt
     local master_host=$(echo $ROS_MASTER_URI | cut -d\/ -f3 | cut -d\: -f1)
+    local master_port=$(echo $ROS_MASTER_URI | cut -d\/ -f3 | cut -d\: -f2)
     local ros_prompt=""
-    if [[ "$master_host" != "" && $master_host != "localhost" ]]; then
+    if [[ "$master_host" == "" ]]; then
+        master_host="localhost"
+    fi
+    if [[ "$master_host" == "localhost" && "$master_port" == "11311" ]]; then
+        ros_prompt=""
+    else
         ros_prompt="[${bold_red}$ROS_MASTER_URI${normal}][${bold_red}$ROS_IP${normal}]"
     fi
     case "`id -u`" in
